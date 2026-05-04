@@ -1,0 +1,15 @@
+meta {
+  name: Add Favorite
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseUrl}}/api/users/me/favorites/{{recipeId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

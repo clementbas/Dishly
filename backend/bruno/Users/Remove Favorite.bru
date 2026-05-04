@@ -1,0 +1,15 @@
+meta {
+  name: Remove Favorite
+  type: http
+  seq: 6
+}
+
+delete {
+  url: {{baseUrl}}/api/users/me/favorites/{{recipeId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

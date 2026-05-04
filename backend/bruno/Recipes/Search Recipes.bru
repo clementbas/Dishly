@@ -1,0 +1,19 @@
+meta {
+  name: Search Recipes
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/recipes
+  body: none
+  auth: none
+}
+
+query {
+  search: pasta
+  difficulty: easy
+  maxPrepTime: 30
+  page: 1
+  limit: 10
+}

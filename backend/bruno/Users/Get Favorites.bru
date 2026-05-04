@@ -1,0 +1,20 @@
+meta {
+  name: Get Favorites
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/api/users/me/favorites
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+query {
+  page: 1
+  limit: 10
+}

@@ -1,0 +1,19 @@
+meta {
+  name: Upload Category Image
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{baseUrl}}/api/categories/{{categoryId}}/image
+  body: multipart-form
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:multipart-form {
+  image: @file(/path/to/your/image.jpg)
+}

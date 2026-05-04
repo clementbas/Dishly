@@ -1,0 +1,47 @@
+meta {
+  name: Create Recipe
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/api/recipes
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "title": "Spaghetti Carbonara",
+    "description": "A classic Italian pasta dish made with eggs, cheese, pancetta and pepper.",
+    "ingredients": [
+      { "name": "Spaghetti", "quantity": "400", "unit": "g" },
+      { "name": "Pancetta", "quantity": "200", "unit": "g" },
+      { "name": "Eggs", "quantity": "4", "unit": "" },
+      { "name": "Parmesan", "quantity": "100", "unit": "g" }
+    ],
+    "steps": [
+      "Cook spaghetti in salted boiling water.",
+      "Fry pancetta until crispy.",
+      "Mix eggs and parmesan.",
+      "Combine all ingredients off heat."
+    ],
+    "prepTime": 10,
+    "cookTime": 20,
+    "servings": 4,
+    "difficulty": "medium",
+    "category": "{{categoryId}}",
+    "tags": ["italian", "pasta", "classic"],
+    "isPublic": true
+  }
+}
+
+script:post-response {
+  if (res.body.success) {
+    bru.setEnvVar("recipeId", res.body.data.recipe._id);
+  }
+}

@@ -1,0 +1,28 @@
+meta {
+  name: Create Category
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/categories
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "name": "Italian",
+    "description": "Traditional Italian cuisine"
+  }
+}
+
+script:post-response {
+  if (res.body.success) {
+    bru.setEnvVar("categoryId", res.body.data.category._id);
+  }
+}

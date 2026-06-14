@@ -1,4 +1,6 @@
 require('dotenv').config();
+// Fix TLS compatibility between Node.js v18+ and MongoDB Atlas on dev
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 const app = require('./src/app');
 const connectDB = require('./src/config/db');
 

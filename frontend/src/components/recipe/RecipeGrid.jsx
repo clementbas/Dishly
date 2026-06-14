@@ -13,7 +13,7 @@ const itemVariants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.35 } },
 };
 
-export default function RecipeGrid({ recipes, loading, error, emptyMessage }) {
+export default function RecipeGrid({ recipes, loading, error, emptyMessage, onDelete }) {
   if (loading) return <LoadingSpinner />;
   if (error) return <ErrorMessage message={error} />;
   if (!recipes?.length) {
@@ -34,7 +34,7 @@ export default function RecipeGrid({ recipes, loading, error, emptyMessage }) {
     >
       {recipes.map((recipe) => (
         <motion.div key={recipe._id} variants={itemVariants}>
-          <RecipeCard recipe={recipe} />
+          <RecipeCard recipe={recipe} onDelete={onDelete} />
         </motion.div>
       ))}
     </motion.div>

@@ -61,7 +61,8 @@
     "selectDifficulty": "Choisir la difficulté",
     "totalTime": "Temps total",
     "prepTimeShort": "Préparation",
-    "cookTimeShort": "Cuisson"
+    "cookTimeShort": "Cuisson",
+    "private": "Privée"
   },
   "auth": {
     "loginTitle": "Bon retour !",
@@ -128,7 +129,8 @@
     "changeAvatar": "Changer la photo",
     "recipes": "recettes",
     "favorites": "favoris",
-    "memberSince": "Membre depuis"
+    "memberSince": "Membre depuis",
+    "emailReadOnly": "L'email ne peut pas être modifié."
   },
   "common": {
     "save": "Enregistrer",
@@ -147,7 +149,9 @@
     "by": "par",
     "and": "et",
     "explore": "Explorer les recettes",
-    "goHome": "Retour à l'accueil"
+    "goHome": "Retour à l'accueil",
+    "retry": "Réessayer",
+    "footerTagline": "Fait avec ♡ pour les passionnés de cuisine."
   },
   "errors": {
     "required": "Ce champ est obligatoire",
@@ -157,7 +161,9 @@
     "ingredientRequired": "Nom et quantité requis",
     "stepRequired": "L'étape ne peut pas être vide",
     "minIngredients": "Ajoutez au moins un ingrédient",
-    "minSteps": "Ajoutez au moins une étape"
+    "minSteps": "Ajoutez au moins une étape",
+    "loginToFavorite": "Connectez-vous pour ajouter aux favoris",
+    "min3": "Minimum 3 caractères"
   },
   "confirm": {
     "delete": "Supprimer",

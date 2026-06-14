@@ -127,7 +127,7 @@ export default function Profile() {
           <div>
             <label className="label">{t('auth.email')}</label>
             <input type="email" className="input opacity-60 cursor-not-allowed" value={user?.email ?? ''} disabled />
-            <p className="text-xs mt-1" style={{ color: 'var(--color-text-muted)' }}>L'email ne peut pas être modifié.</p>
+            <p className="text-xs mt-1" style={{ color: 'var(--color-text-muted)' }}>{t('profile.emailReadOnly')}</p>
           </div>
 
           <button type="submit" className="btn-primary w-full py-3" disabled={saving}>

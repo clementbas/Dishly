@@ -28,7 +28,7 @@ const HeartIcon = ({ filled }) => (
 
 const difficultyClass = { easy: 'badge-easy', medium: 'badge-medium', hard: 'badge-hard' };
 
-export default function RecipeCard({ recipe }) {
+export default function RecipeCard({ recipe, onDelete }) {
   const { t } = useTranslation();
   const { isAuthenticated } = useAuth();
   const { updateUser, user } = useAuthContext();
@@ -38,10 +38,16 @@ export default function RecipeCard({ recipe }) {
   const favorite = isFavorite(recipe._id);
   const isLoading = loadingId === recipe._id;
 
+  const handleDelete = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onDelete?.(recipe._id);
+  };
+
   const handleFavorite = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!isAuthenticated) return toast.error('Connectez-vous pour ajouter aux favoris');
+    if (!isAuthenticated) return toast.error(t('errors.loginToFavorite'));
     await toggle(recipe._id, (action) => {
       toast.success(action === 'added' ? t('favorites.added') : t('favorites.removed'));
       const favorites = action === 'added'
@@ -120,6 +126,16 @@ export default function RecipeCard({ recipe }) {
                 {t('recipe.byAuthor', { name: recipe.author.username })}
               </span>
             </div>
+          )}
+
+          {onDelete && (
+            <button
+              onClick={handleDelete}
+              className="mt-1 text-xs font-medium self-start"
+              style={{ color: '#e23923' }}
+            >
+              {t('recipe.delete')}
+            </button>
           )}
         </div>
       </Link>

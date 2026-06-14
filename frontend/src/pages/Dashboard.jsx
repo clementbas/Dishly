@@ -70,6 +70,7 @@ export default function Dashboard() {
             loading={loading}
             error={error}
             emptyMessage={t('dashboard.empty')}
+            onDelete={setDeleteTarget}
           />
           <Pagination pagination={pagination} onPageChange={goToPage} />
         </>

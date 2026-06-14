@@ -1,9 +1,12 @@
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
 import { userService } from '../services/userService';
 import { useAuth } from './useAuth';
 
 export const useFavorites = () => {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const [loadingId, setLoadingId] = useState(null);
 
   const isFavorite = useCallback(
@@ -23,11 +26,13 @@ export const useFavorites = () => {
           await userService.addFavorite(recipeId);
           onUpdate?.('added');
         }
+      } catch (err) {
+        toast.error(err.response?.data?.message ?? t('common.error'));
       } finally {
         setLoadingId(null);
       }
     },
-    [user, isFavorite]
+    [user, isFavorite, t]
   );
 
   return { isFavorite, toggle, loadingId };

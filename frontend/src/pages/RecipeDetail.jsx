@@ -46,7 +46,7 @@ export default function RecipeDetail() {
   const favorite = isFavorite(recipe?._id);
 
   const handleFavorite = async () => {
-    if (!isAuthenticated) return toast.error('Connectez-vous pour ajouter aux favoris');
+    if (!isAuthenticated) return toast.error(t('errors.loginToFavorite'));
     await toggle(recipe._id, (action) => {
       toast.success(action === 'added' ? t('favorites.added') : t('favorites.removed'));
       const favorites = action === 'added'
@@ -109,7 +109,7 @@ export default function RecipeDetail() {
               </span>
               {!recipe.isPublic && (
                 <span className="badge" style={{ backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-text-muted)' }}>
-                  Privée
+                  {t('recipe.private')}
                 </span>
               )}
             </div>

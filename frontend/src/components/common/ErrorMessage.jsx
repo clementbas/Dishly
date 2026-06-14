@@ -1,4 +1,7 @@
+import { useTranslation } from 'react-i18next';
+
 export default function ErrorMessage({ message, onRetry }) {
+  const { t } = useTranslation();
   if (!message) return null;
   return (
     <div
@@ -11,7 +14,7 @@ export default function ErrorMessage({ message, onRetry }) {
       <span className="flex-1">{message}</span>
       {onRetry && (
         <button onClick={onRetry} className="underline text-xs font-medium">
-          Réessayer
+          {t('common.retry')}
         </button>
       )}
     </div>

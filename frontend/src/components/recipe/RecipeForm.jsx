@@ -16,7 +16,7 @@ const EMPTY_FORM = {
 const validate = (data, t) => {
   const errs = {};
   if (!data.title.trim()) errs.title = t('errors.required');
-  else if (data.title.trim().length < 3) errs.title = t('errors.usernameMin');
+  else if (data.title.trim().length < 3) errs.title = t('errors.min3');
   if (!data.description.trim()) errs.description = t('errors.required');
   else if (data.description.trim().length < 10) errs.description = 'Minimum 10 caractères';
   if (!data.category) errs.category = t('errors.required');

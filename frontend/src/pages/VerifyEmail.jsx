@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
@@ -15,8 +15,12 @@ export default function VerifyEmail() {
   const { token } = useParams();
   const { t } = useTranslation();
   const [status, setStatus] = useState('loading'); // loading | success | error
+  const called = useRef(false);
 
   useEffect(() => {
+    if (called.current) return;
+    called.current = true;
+
     authService.verifyEmail(token)
       .then(() => setStatus('success'))
       .catch(() => setStatus('error'));

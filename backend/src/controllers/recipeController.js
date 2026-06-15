@@ -19,7 +19,14 @@ const getAll = async (req, res, next) => {
 
     const filter = { isPublic: true };
 
-    if (search) filter.$text = { $search: search };
+    if (search) {
+      const regex = new RegExp(search, 'i');
+      filter.$or = [
+        { title: regex },
+        { description: regex },
+        { tags: regex },
+      ];
+    }
     if (category) filter.category = category;
     if (difficulty) filter.difficulty = difficulty;
     if (author) filter.author = author;

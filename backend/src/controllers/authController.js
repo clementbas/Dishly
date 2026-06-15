@@ -63,7 +63,7 @@ const login = async (req, res, next) => {
       return res.status(401).json({ success: false, message: 'Invalid email or password' });
     }
 
-    if (!user.isVerified) {
+    if (user.isVerified === false) {
       return res.status(403).json({
         success: false,
         message: 'Please verify your email before logging in.',
@@ -171,6 +171,7 @@ const resetPassword = async (req, res, next) => {
     user.password = req.body.password;
     user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
+    user.isVerified = true; // reset par email = preuve d'accès à la boîte mail
     await user.save();
 
     res.json({ success: true, message: 'Password reset successfully. You can now log in.' });

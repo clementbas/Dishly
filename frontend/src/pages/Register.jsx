@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { Link, useNavigate, Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/useAuth';
-import { useToast } from '../hooks/useToast';
 import ErrorMessage from '../components/common/ErrorMessage';
 
 const pageVariants = {
@@ -15,12 +14,11 @@ const pageVariants = {
 export default function Register() {
   const { t } = useTranslation();
   const { register, isAuthenticated } = useAuth();
-  const toast = useToast();
-  const navigate = useNavigate();
   const [form, setForm] = useState({ username: '', email: '', password: '' });
   const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [registeredEmail, setRegisteredEmail] = useState(null);
 
   if (isAuthenticated) return <Navigate to="/" replace />;
 
@@ -46,15 +44,39 @@ export default function Register() {
     if (Object.keys(errs).length) return setErrors(errs);
     setLoading(true);
     try {
-      await register(form);
-      toast.success(t('auth.registerSuccess'));
-      navigate('/');
+      const data = await register(form);
+      setRegisteredEmail(data.email);
     } catch (err) {
       setServerError(err.response?.data?.message ?? t('common.error'));
     } finally {
       setLoading(false);
     }
   };
+
+  // Écran affiché après inscription réussie
+  if (registeredEmail) {
+    return (
+      <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit"
+        className="min-h-screen flex items-center justify-center px-4"
+        style={{ paddingTop: 'var(--navbar-height)', backgroundColor: 'var(--color-bg)' }}
+      >
+        <div className="w-full max-w-md text-center">
+          <div className="card p-10">
+            <div className="text-6xl mb-6">✉️</div>
+            <h1 className="font-display text-3xl font-bold mb-3" style={{ color: 'var(--color-text)' }}>
+              {t('auth.checkEmail')}
+            </h1>
+            <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--color-text-secondary)' }}>
+              {t('auth.checkEmailDesc', { email: registeredEmail })}
+            </p>
+            <Link to="/login" className="btn-primary w-full py-3 block text-center">
+              {t('auth.signIn')}
+            </Link>
+          </div>
+        </div>
+      </motion.div>
+    );
+  }
 
   return (
     <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit"

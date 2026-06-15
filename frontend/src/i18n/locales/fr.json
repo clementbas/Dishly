@@ -82,7 +82,15 @@
     "signIn": "Se connecter",
     "loginSuccess": "Bon retour !",
     "registerSuccess": "Bienvenue sur Dishly !",
-    "logoutSuccess": "À bientôt !"
+    "logoutSuccess": "À bientôt !",
+    "checkEmail": "Vérifiez votre boîte mail",
+    "checkEmailDesc": "Un email de confirmation a été envoyé à {{email}}. Cliquez sur le lien pour activer votre compte.",
+    "emailNotVerified": "Veuillez vérifier votre email avant de vous connecter.",
+    "verifyingEmail": "Vérification en cours...",
+    "verifySuccess": "Email vérifié ! Vous pouvez maintenant vous connecter.",
+    "verifyError": "Lien invalide ou expiré.",
+    "verifyTitle": "Vérification de l'email",
+    "resendEmail": "Renvoyer l'email"
   },
   "filters": {
     "search": "Rechercher...",

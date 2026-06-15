@@ -3,7 +3,11 @@ import api from './api';
 export const authService = {
   register: async (data) => {
     const res = await api.post('/auth/register', data);
-    return res.data.data;
+    return res.data.data; // { email }
+  },
+  verifyEmail: async (token) => {
+    const res = await api.get(`/auth/verify/${token}`);
+    return res.data;
   },
   login: async (data) => {
     const res = await api.post('/auth/login', data);

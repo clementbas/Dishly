@@ -47,7 +47,10 @@ export default function Login() {
       toast.success(t('auth.loginSuccess'));
       navigate('/');
     } catch (err) {
-      setServerError(err.response?.data?.message ?? t('common.error'));
+      const message = err.response?.data?.code === 'EMAIL_NOT_VERIFIED'
+        ? t('auth.emailNotVerified')
+        : err.response?.data?.message ?? t('common.error');
+      setServerError(message);
     } finally {
       setLoading(false);
     }

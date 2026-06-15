@@ -34,9 +34,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = useCallback(async (credentials) => {
     const data = await authService.register(credentials);
-    localStorage.setItem('accessToken', data.accessToken);
-    localStorage.setItem('refreshToken', data.refreshToken);
-    setUser(data.user);
+    // Pas d'auto-connexion — l'utilisateur doit vérifier son email d'abord
     return data;
   }, []);
 

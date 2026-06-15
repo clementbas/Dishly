@@ -82,7 +82,15 @@
     "signIn": "Sign in",
     "loginSuccess": "Welcome back!",
     "registerSuccess": "Welcome to Dishly!",
-    "logoutSuccess": "See you soon!"
+    "logoutSuccess": "See you soon!",
+    "checkEmail": "Check your inbox",
+    "checkEmailDesc": "A confirmation email has been sent to {{email}}. Click the link to activate your account.",
+    "emailNotVerified": "Please verify your email before logging in.",
+    "verifyingEmail": "Verifying...",
+    "verifySuccess": "Email verified! You can now log in.",
+    "verifyError": "Invalid or expired link.",
+    "verifyTitle": "Email verification",
+    "resendEmail": "Resend email"
   },
   "filters": {
     "search": "Search...",

@@ -195,5 +195,22 @@
   "confirm": {
     "delete": "Delete",
     "cancel": "Cancel"
+  },
+  "admin": {
+    "title": "Administration",
+    "subtitle": "User management",
+    "users": "Users",
+    "searchUsers": "Search a user...",
+    "role": "Role",
+    "makeAdmin": "Make admin",
+    "makeUser": "Demote",
+    "deleteUser": "Delete",
+    "deleteUserConfirm": "Delete this user?",
+    "deleteUserMessage": "This will also delete all their recipes. Irreversible.",
+    "userDeleted": "User deleted",
+    "roleUpdated": "Role updated",
+    "recipes": "recipes",
+    "joinedAt": "Joined",
+    "noUsers": "No users found"
   }
 }

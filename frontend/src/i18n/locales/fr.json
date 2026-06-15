@@ -195,5 +195,22 @@
   "confirm": {
     "delete": "Supprimer",
     "cancel": "Annuler"
+  },
+  "admin": {
+    "title": "Administration",
+    "subtitle": "Gestion des utilisateurs",
+    "users": "Utilisateurs",
+    "searchUsers": "Rechercher un utilisateur...",
+    "role": "Rôle",
+    "makeAdmin": "Passer admin",
+    "makeUser": "Rétrograder",
+    "deleteUser": "Supprimer",
+    "deleteUserConfirm": "Supprimer cet utilisateur ?",
+    "deleteUserMessage": "Cette action supprimera également toutes ses recettes. Irréversible.",
+    "userDeleted": "Utilisateur supprimé",
+    "roleUpdated": "Rôle mis à jour",
+    "recipes": "recettes",
+    "joinedAt": "Inscrit le",
+    "noUsers": "Aucun utilisateur trouvé"
   }
 }

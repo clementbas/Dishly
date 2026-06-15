@@ -121,4 +121,73 @@ const getPublicProfile = async (req, res, next) => {
   }
 };
 
-module.exports = { getProfile, updateProfile, uploadAvatar, getFavorites, addFavorite, removeFavorite, getPublicProfile };
+const adminGetAllUsers = async (req, res, next) => {
+  try {
+    const { page = 1, limit = 20, search } = req.query;
+    const pageNum = Math.max(1, parseInt(page));
+    const limitNum = Math.min(50, Math.max(1, parseInt(limit)));
+
+    const filter = search
+      ? { $or: [{ username: new RegExp(search, 'i') }, { email: new RegExp(search, 'i') }] }
+      : {};
+
+    const [users, total] = await Promise.all([
+      User.find(filter).sort('-createdAt').skip((pageNum - 1) * limitNum).limit(limitNum),
+      User.countDocuments(filter),
+    ]);
+
+    res.json({
+      success: true,
+      data: {
+        users,
+        pagination: { total, page: pageNum, limit: limitNum, totalPages: Math.ceil(total / limitNum) },
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const adminUpdateUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    if (id === req.user._id.toString()) {
+      return res.status(400).json({ success: false, message: 'Cannot modify your own account via admin panel' });
+    }
+
+    const user = await User.findByIdAndUpdate(id, { role: req.body.role }, { new: true, runValidators: true });
+    if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+
+    res.json({ success: true, message: 'User updated', data: { user } });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const adminDeleteUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    if (id === req.user._id.toString()) {
+      return res.status(400).json({ success: false, message: 'Cannot delete your own account' });
+    }
+
+    const user = await User.findById(id);
+    if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+
+    await Recipe.deleteMany({ author: id });
+    await user.deleteOne();
+
+    res.json({ success: true, message: 'User and their recipes deleted' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = {
+  getProfile, updateProfile, uploadAvatar,
+  getFavorites, addFavorite, removeFavorite,
+  getPublicProfile,
+  adminGetAllUsers, adminUpdateUser, adminDeleteUser,
+};

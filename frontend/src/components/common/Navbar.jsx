@@ -137,6 +137,13 @@ export default function Navbar() {
                       style={{ color: 'var(--color-text)' }}>
                       {t('nav.newRecipe')}
                     </Link>
+                    {user?.role === 'admin' && (
+                      <Link to="/admin" onClick={() => setUserMenuOpen(false)}
+                        className="block px-4 py-2.5 text-sm hover:bg-bg-secondary transition-colors"
+                        style={{ color: 'var(--color-primary)' }}>
+                        🛡️ Administration
+                      </Link>
+                    )}
                     <hr style={{ borderColor: 'var(--color-border)', margin: '4px 0' }} />
                     <button onClick={handleLogout}
                       className="block w-full text-left px-4 py-2.5 text-sm hover:bg-bg-secondary transition-colors"

@@ -107,7 +107,8 @@ const update = async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Recipe not found' });
     }
 
-    if (recipe.author.toString() !== req.user._id.toString()) {
+    const isOwner = recipe.author.toString() === req.user._id.toString();
+    if (!isOwner && req.user.role !== 'admin') {
       return res.status(403).json({ success: false, message: 'Not authorized to update this recipe' });
     }
 
@@ -129,7 +130,8 @@ const remove = async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Recipe not found' });
     }
 
-    if (recipe.author.toString() !== req.user._id.toString()) {
+    const isOwner = recipe.author.toString() === req.user._id.toString();
+    if (!isOwner && req.user.role !== 'admin') {
       return res.status(403).json({ success: false, message: 'Not authorized to delete this recipe' });
     }
 

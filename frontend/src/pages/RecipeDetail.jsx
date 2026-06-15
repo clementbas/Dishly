@@ -44,6 +44,7 @@ export default function RecipeDetail() {
   }, [id, t]);
 
   const isOwner = user && recipe && recipe.author?._id === user._id;
+  const canEdit = isOwner || user?.role === 'admin';
   const favorite = isFavorite(recipe?._id);
 
   const handleFavorite = async () => {
@@ -144,7 +145,7 @@ export default function RecipeDetail() {
               {favorite ? t('favorites.removed').split(' ')[0] : t('favorites.added').split(' ')[0]}
             </motion.button>
 
-            {isOwner && (
+            {canEdit && (
               <>
                 <Link to={`/recipes/${recipe._id}/edit`} className="btn-secondary">
                   {t('common.edit')}

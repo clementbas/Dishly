@@ -9,6 +9,7 @@ import Register from './pages/Register';
 import VerifyEmail from './pages/VerifyEmail';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import Admin from './pages/Admin';
 import RecipeDetail from './pages/RecipeDetail';
 import Dashboard from './pages/Dashboard';
 import CreateRecipe from './pages/CreateRecipe';
@@ -38,6 +39,7 @@ export default function App() {
               <Route path="/recipes/:id/edit" element={<EditRecipe />} />
               <Route path="/favorites" element={<Favorites />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/admin" element={<Admin />} />
             </Route>
           </Routes>
         </AnimatePresence>

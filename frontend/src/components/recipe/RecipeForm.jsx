@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCategories } from '../../hooks/useCategories';
+import { categoryService } from '../../services/categoryService';
+import { useToast } from '../../hooks/useToast';
 import ErrorMessage from '../common/ErrorMessage';
 
 const EMPTY_INGREDIENT = { name: '', quantity: '', unit: '' };
@@ -31,7 +33,11 @@ const validate = (data, t) => {
 
 export default function RecipeForm({ initialData = null, onSubmit, loading = false, submitLabel }) {
   const { t } = useTranslation();
-  const { categories } = useCategories();
+  const toast = useToast();
+  const { categories, setCategories } = useCategories();
+  const [showNewCategory, setShowNewCategory] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState('');
+  const [creatingCategory, setCreatingCategory] = useState(false);
   const [form, setForm] = useState(EMPTY_FORM);
   const [touched, setTouched] = useState({});
   const [errors, setErrors] = useState({});
@@ -123,6 +129,24 @@ export default function RecipeForm({ initialData = null, onSubmit, loading = fal
     }
   };
 
+  const handleCreateCategory = async (e) => {
+    e.preventDefault();
+    if (!newCategoryName.trim()) return;
+    setCreatingCategory(true);
+    try {
+      const created = await categoryService.create({ name: newCategoryName.trim() });
+      setCategories((prev) => [...prev, created]);
+      setForm((p) => ({ ...p, category: created._id }));
+      setNewCategoryName('');
+      setShowNewCategory(false);
+      toast.success(t('recipe.newCategorySuccess'));
+    } catch (err) {
+      toast.error(err.response?.data?.message ?? t('common.error'));
+    } finally {
+      setCreatingCategory(false);
+    }
+  };
+
   const inputClass = (field) => `input${errors[field] ? ' error' : ''}`;
 
   return (
@@ -149,13 +173,45 @@ export default function RecipeForm({ initialData = null, onSubmit, loading = fal
       {/* Category + Difficulty */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="label">{t('recipe.category')} *</label>
+          <div className="flex items-center justify-between mb-1.5">
+            <label className="label mb-0">{t('recipe.category')} *</label>
+            <button
+              type="button"
+              onClick={() => setShowNewCategory((v) => !v)}
+              className="text-xs font-semibold"
+              style={{ color: 'var(--color-primary)' }}
+            >
+              {showNewCategory ? '✕ Annuler' : `+ ${t('recipe.newCategory')}`}
+            </button>
+          </div>
+
           <select className={inputClass('category')} value={form.category}
             onChange={set('category')} onBlur={() => touch('category')}>
             <option value="">{t('recipe.selectCategory')}</option>
             {categories.map((c) => <option key={c._id} value={c._id}>{c.name}</option>)}
           </select>
           {errors.category && <p className="text-xs mt-1" style={{ color: '#e23923' }}>{errors.category}</p>}
+
+          {showNewCategory && (
+            <form onSubmit={handleCreateCategory} className="flex gap-2 mt-2">
+              <input
+                type="text"
+                className="input flex-1 py-2 text-sm"
+                placeholder={t('recipe.newCategoryPlaceholder')}
+                value={newCategoryName}
+                onChange={(e) => setNewCategoryName(e.target.value)}
+                autoFocus
+                maxLength={50}
+              />
+              <button
+                type="submit"
+                className="btn-primary px-4 py-2 text-sm"
+                disabled={creatingCategory || !newCategoryName.trim()}
+              >
+                {creatingCategory ? t('recipe.newCategoryCreating') : t('recipe.newCategoryCreate')}
+              </button>
+            </form>
+          )}
         </div>
         <div>
           <label className="label">{t('recipe.difficulty')} *</label>

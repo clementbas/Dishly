@@ -14,5 +14,5 @@ export const useCategories = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  return { categories, loading, error };
+  return { categories, setCategories, loading, error };
 };

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { recipeService } from '../services/recipeService';
@@ -28,6 +28,7 @@ export default function RecipeDetail() {
   const { isFavorite, toggle, loadingId } = useFavorites();
   const toast = useToast();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -46,7 +47,7 @@ export default function RecipeDetail() {
   const favorite = isFavorite(recipe?._id);
 
   const handleFavorite = async () => {
-    if (!isAuthenticated) return toast.error(t('errors.loginToFavorite'));
+    if (!isAuthenticated) return navigate('/login', { state: { from: location.pathname } });
     await toggle(recipe._id, (action) => {
       toast.success(action === 'added' ? t('favorites.added') : t('favorites.removed'));
       const favorites = action === 'added'

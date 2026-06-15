@@ -7,6 +7,8 @@ import { useToast } from '../../hooks/useToast';
 import { useAuthContext } from '../../context/AuthContext';
 import Avatar from '../user/Avatar';
 
+
+
 const ClockIcon = () => (
   <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
     <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
@@ -83,16 +85,18 @@ export default function RecipeCard({ recipe, onDelete }) {
           <span className={`badge ${difficultyClass[recipe.difficulty]} absolute top-3 left-3`}>
             {t(`recipe.${recipe.difficulty}`)}
           </span>
-          {/* Favorite button */}
-          <motion.button
-            whileTap={{ scale: 0.85 }}
-            onClick={handleFavorite}
-            disabled={isLoading}
-            className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-opacity"
-            style={{ backgroundColor: 'rgba(255,255,255,0.92)', color: favorite ? '#e23923' : 'var(--color-text-secondary)' }}
-          >
-            <HeartIcon filled={favorite} />
-          </motion.button>
+          {/* Favorite button — visible uniquement si connecté */}
+          {isAuthenticated && (
+            <motion.button
+              whileTap={{ scale: 0.85 }}
+              onClick={handleFavorite}
+              disabled={isLoading}
+              className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-opacity"
+              style={{ backgroundColor: 'rgba(255,255,255,0.92)', color: favorite ? '#e23923' : 'var(--color-text-secondary)' }}
+            >
+              <HeartIcon filled={favorite} />
+            </motion.button>
+          )}
         </div>
 
         {/* Content */}

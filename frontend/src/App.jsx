@@ -7,6 +7,8 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import VerifyEmail from './pages/VerifyEmail';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import RecipeDetail from './pages/RecipeDetail';
 import Dashboard from './pages/Dashboard';
 import CreateRecipe from './pages/CreateRecipe';
@@ -28,6 +30,8 @@ export default function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/recipes/:id" element={<RecipeDetail />} />
             <Route path="/verify/:token" element={<VerifyEmail />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/recipes/new" element={<CreateRecipe />} />

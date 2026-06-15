@@ -90,7 +90,21 @@
     "verifySuccess": "Email verified! You can now log in.",
     "verifyError": "Invalid or expired link.",
     "verifyTitle": "Email verification",
-    "resendEmail": "Resend email"
+    "resendEmail": "Resend email",
+    "forgotPassword": "Forgot password?",
+    "forgotPasswordTitle": "Forgot password",
+    "forgotPasswordSubtitle": "Enter your email and we'll send you a reset link.",
+    "forgotPasswordSuccess": "If this email exists, a reset link has been sent.",
+    "sendResetLink": "Send reset link",
+    "sendingLink": "Sending...",
+    "resetPasswordTitle": "New password",
+    "resetPasswordSubtitle": "Choose a new password for your account.",
+    "newPassword": "New password",
+    "resetPassword": "Reset password",
+    "resettingPassword": "Resetting...",
+    "resetSuccess": "Password reset! You can now log in.",
+    "resetError": "Invalid or expired link. Please make a new request.",
+    "backToLogin": "Back to login"
   },
   "filters": {
     "search": "Search...",

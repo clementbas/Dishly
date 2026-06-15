@@ -90,7 +90,21 @@
     "verifySuccess": "Email vérifié ! Vous pouvez maintenant vous connecter.",
     "verifyError": "Lien invalide ou expiré.",
     "verifyTitle": "Vérification de l'email",
-    "resendEmail": "Renvoyer l'email"
+    "resendEmail": "Renvoyer l'email",
+    "forgotPassword": "Mot de passe oublié ?",
+    "forgotPasswordTitle": "Mot de passe oublié",
+    "forgotPasswordSubtitle": "Entrez votre email et nous vous enverrons un lien de réinitialisation.",
+    "forgotPasswordSuccess": "Si cet email existe, un lien de réinitialisation a été envoyé.",
+    "sendResetLink": "Envoyer le lien",
+    "sendingLink": "Envoi...",
+    "resetPasswordTitle": "Nouveau mot de passe",
+    "resetPasswordSubtitle": "Choisissez un nouveau mot de passe pour votre compte.",
+    "newPassword": "Nouveau mot de passe",
+    "resetPassword": "Réinitialiser",
+    "resettingPassword": "Réinitialisation...",
+    "resetSuccess": "Mot de passe réinitialisé ! Vous pouvez maintenant vous connecter.",
+    "resetError": "Lien invalide ou expiré. Veuillez refaire une demande.",
+    "backToLogin": "Retour à la connexion"
   },
   "filters": {
     "search": "Rechercher...",

@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const { sendVerificationEmail, sendWelcomeEmail } = require('../services/emailService');
+const { sendVerificationEmail, sendWelcomeEmail, sendResetPasswordEmail } = require('../services/emailService');
 
 const generateAccessToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
@@ -131,4 +131,52 @@ const getMe = async (req, res) => {
   res.json({ success: true, data: { user: req.user } });
 };
 
-module.exports = { register, verifyEmail, login, refresh, logout, getMe };
+const forgotPassword = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+
+    // Réponse identique que l'email existe ou non (sécurité)
+    if (!user) {
+      return res.json({ success: true, message: 'If this email exists, a reset link has been sent.' });
+    }
+
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    user.passwordResetToken = resetToken;
+    user.passwordResetExpires = Date.now() + 60 * 60 * 1000; // 1h
+    await user.save({ validateBeforeSave: false });
+
+    sendResetPasswordEmail(user, resetToken).catch((err) =>
+      console.error('[Email] Reset password email failed:', err.message)
+    );
+
+    res.json({ success: true, message: 'If this email exists, a reset link has been sent.' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const resetPassword = async (req, res, next) => {
+  try {
+    const user = await User.findOne({
+      passwordResetToken: req.params.token,
+      passwordResetExpires: { $gt: Date.now() },
+    }).select('+passwordResetToken +passwordResetExpires');
+
+    if (!user) {
+      return res.status(400).json({ success: false, message: 'Invalid or expired reset link' });
+    }
+
+    user.password = req.body.password;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save();
+
+    res.json({ success: true, message: 'Password reset successfully. You can now log in.' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { register, verifyEmail, login, refresh, logout, getMe, forgotPassword, resetPassword };

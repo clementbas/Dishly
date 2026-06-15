@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "predev": "kill $(lsof -ti:8000) 2>/dev/null || true",
     "dev": "nodemon server.js"
   },
   "dependencies": {

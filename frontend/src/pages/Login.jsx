@@ -87,6 +87,12 @@ export default function Login() {
               {errors.password && <p className="text-xs mt-1" style={{ color: '#e23923' }}>{errors.password}</p>}
             </div>
 
+            <div className="flex justify-end">
+              <Link to="/forgot-password" className="text-xs font-medium" style={{ color: 'var(--color-primary)' }}>
+                {t('auth.forgotPassword')}
+              </Link>
+            </div>
+
             <button type="submit" className="btn-primary w-full py-3" disabled={loading}>
               {loading ? t('auth.loggingIn') : t('auth.login')}
             </button>

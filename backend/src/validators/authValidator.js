@@ -32,4 +32,18 @@ const refreshSchema = Joi.object({
   }),
 });
 
-module.exports = { registerSchema, loginSchema, refreshSchema };
+const forgotPasswordSchema = Joi.object({
+  email: Joi.string().email().lowercase().required().messages({
+    'string.email': 'Please provide a valid email',
+    'any.required': 'Email is required',
+  }),
+});
+
+const resetPasswordSchema = Joi.object({
+  password: Joi.string().min(6).required().messages({
+    'string.min': 'Password must be at least 6 characters',
+    'any.required': 'Password is required',
+  }),
+});
+
+module.exports = { registerSchema, loginSchema, refreshSchema, forgotPasswordSchema, resetPasswordSchema };

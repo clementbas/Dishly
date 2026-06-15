@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 const welcomeEmail = require('../templates/welcomeEmail');
 const verificationEmail = require('../templates/verificationEmail');
+const resetPasswordEmail = require('../templates/resetPasswordEmail');
 
 const createTransporter = () =>
   nodemailer.createTransport({
@@ -38,4 +39,13 @@ const sendVerificationEmail = (user, token) => {
   });
 };
 
-module.exports = { sendWelcomeEmail, sendVerificationEmail };
+const sendResetPasswordEmail = (user, token) => {
+  const resetUrl = `${process.env.CLIENT_URL}/reset-password/${token}`;
+  return sendMail({
+    to: user.email,
+    subject: 'Réinitialisation de votre mot de passe — Dishly',
+    html: resetPasswordEmail(user.username, resetUrl),
+  });
+};
+
+module.exports = { sendWelcomeEmail, sendVerificationEmail, sendResetPasswordEmail };

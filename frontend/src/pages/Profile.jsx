@@ -35,7 +35,6 @@ export default function Profile() {
   const set = (field) => (e) => {
     setForm((p) => ({ ...p, [field]: e.target.value }));
     setErrors((p) => ({ ...p, [field]: undefined }));
-    setServerError(null);
   };
 
   const handleSubmit = async (e) => {

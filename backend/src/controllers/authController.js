@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const { sendWelcomeEmail } = require('../services/emailService');
 
 const generateAccessToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
@@ -17,6 +18,11 @@ const register = async (req, res, next) => {
 
     user.refreshToken = refreshToken;
     await user.save({ validateBeforeSave: false });
+
+    // Email non-bloquant — l'inscription réussit même si l'email échoue
+    sendWelcomeEmail(user).catch((err) =>
+      console.error('[Email] Welcome email failed:', err.message)
+    );
 
     res.status(201).json({
       success: true,
